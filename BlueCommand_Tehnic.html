@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BlueCommand — Documentație Tehnică</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f0f11;
+  --bg2: #16161a;
+  --bg3: #1e1e24;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.13);
+  --text: #e4e4ef;
+  --muted: #888899;
+  --dim: #444455;
+  --accent: #7c6ef7;  /* purple */
+  --green: #3dd68c;
+  --blue: #52a8ff;
+  --orange: #f4a94e;
+  --red: #f47e7e;
+  --yellow: #f0d060;
+  --teal: #44d8c8;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'IBM Plex Sans',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  font-size:15px;
+  line-height:1.75;
+}
+
+/* GRAIN */
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events:none;
+}
+
+.wrapper{position:relative;z-index:1;display:grid;grid-template-columns:260px 1fr;min-height:100vh}
+
+/* ── SIDEBAR ── */
+aside{
+  position:sticky;top:0;height:100vh;
+  background:var(--bg2);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;
+  overflow-y:auto;
+  padding:32px 0;
+}
+.sidebar-logo{
+  padding:0 24px 28px;
+  border-bottom:1px solid var(--border);
+}
+.sidebar-logo .logo-text{
+  font-family:'Syne',sans-serif;
+  font-size:22px;font-weight:800;
+  color:#fff;
+}
+.sidebar-logo .logo-text span{color:var(--accent)}
+.sidebar-logo .sub{font-size:11px;color:var(--muted);margin-top:2px;font-family:'IBM Plex Mono',monospace}
+
+nav{padding:20px 0;flex:1}
+.nav-group{margin-bottom:4px}
+.nav-group-label{
+  padding:4px 24px;
+  font-size:10px;text-transform:uppercase;letter-spacing:0.12em;
+  color:var(--dim);font-weight:500;
+}
+.nav-link{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 24px;
+  font-size:13px;color:var(--muted);
+  text-decoration:none;
+  transition:all 0.2s;
+  border-left:2px solid transparent;
+}
+.nav-link:hover{color:var(--text);background:rgba(255,255,255,0.04)}
+.nav-link.active{color:#fff;border-left-color:var(--accent);background:rgba(124,110,247,0.08)}
+.nav-link .icon{font-size:14px;width:16px;text-align:center}
+
+/* ── MAIN ── */
+main{overflow-x:hidden;padding-bottom:100px}
+
+/* ── HERO ── */
+.hero{
+  padding:72px 64px 56px;
+  border-bottom:1px solid var(--border);
+  position:relative;overflow:hidden;
+}
+.hero::after{
+  content:'';position:absolute;top:-80px;right:-80px;
+  width:400px;height:400px;
+  background:radial-gradient(circle,rgba(124,110,247,0.15) 0%,transparent 65%);
+  pointer-events:none;
+}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(124,110,247,0.12);
+  border:1px solid rgba(124,110,247,0.3);
+  border-radius:6px;padding:4px 12px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;color:var(--accent);
+  margin-bottom:20px;
+}
+.hero h1{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(36px,5vw,58px);font-weight:800;
+  color:#fff;line-height:1.05;
+}
+.hero h1 em{color:var(--accent);font-style:normal}
+.hero-desc{
+  max-width:620px;margin-top:16px;
+  font-size:16px;color:var(--muted);font-weight:300;
+}
+.hero-badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+.badge{
+  padding:5px 12px;border-radius:6px;
+  font-family:'IBM Plex Mono',monospace;font-size:12px;
+  border:1px solid var(--border2);color:var(--muted);
+}
+.badge.fe{border-color:rgba(82,168,255,0.4);color:var(--blue)}
+.badge.be{border-color:rgba(61,214,140,0.4);color:var(--green)}
+.badge.db{border-color:rgba(244,169,78,0.4);color:var(--orange)}
+
+/* ── SECTION ── */
+.section{
+  padding:64px 64px;
+  border-bottom:1px solid var(--border);
+}
+.section-header{margin-bottom:40px}
+.section-tag{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;color:var(--accent);
+  text-transform:uppercase;letter-spacing:0.12em;
+  margin-bottom:8px;
+}
+.section h2{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(26px,3vw,36px);font-weight:700;
+  color:#fff;line-height:1.1;
+}
+.section-intro{
+  margin-top:10px;font-size:15px;
+  color:var(--muted);max-width:680px;
+}
+
+/* ── SPLIT LAYOUT ── */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:28px}
+.split-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-top:28px}
+
+/* ── CODE BLOCK ── */
+.code-block{
+  background:var(--bg3);
+  border:1px solid var(--border2);
+  border-radius:10px;
+  overflow:hidden;
+  margin:20px 0;
+  font-size:13px;
+}
+.code-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 16px;
+  background:rgba(255,255,255,0.03);
+  border-bottom:1px solid var(--border);
+}
+.code-header .lang{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;color:var(--muted);
+}
+.code-header .file{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;color:var(--dim);
+}
+.code-body{
+  padding:20px;
+  font-family:'IBM Plex Mono',monospace;
+  line-height:1.7;
+  overflow-x:auto;
+  white-space:pre;
+}
+/* Syntax colors */
+.k{color:#cf8ef4}   /* keyword */
+.s{color:#a8d7a8}   /* string */
+.c{color:#555566;font-style:italic}  /* comment */
+.n{color:#82cfff}   /* name / type */
+.v{color:#f4a94e}   /* value / variable */
+.m{color:#7c6ef7}   /* method / func name */
+.p{color:#e4e4ef}   /* punctuation */
+.t{color:#44d8c8}   /* type */
+.d{color:#3dd68c}   /* decorator / attr */
+
+/* ── INFO CARD ── */
+.card{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:24px;
+}
+.card h3{
+  font-family:'Syne',sans-serif;
+  font-size:17px;font-weight:700;color:#fff;
+  margin-bottom:10px;
+}
+.card p{font-size:14px;color:var(--muted)}
+.card-icon{font-size:22px;margin-bottom:12px}
+
+/* ── TECH PILL ── */
+.tech-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.tech{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:5px 12px;border-radius:6px;
+  font-family:'IBM Plex Mono',monospace;font-size:12px;
+  border:1px solid var(--border2);color:var(--muted);
+}
+.tech.primary{border-color:rgba(124,110,247,0.4);color:var(--accent)}
+.tech.blue{border-color:rgba(82,168,255,0.35);color:var(--blue)}
+.tech.green{border-color:rgba(61,214,140,0.35);color:var(--green)}
+.tech.orange{border-color:rgba(244,169,78,0.35);color:var(--orange)}
+.tech.teal{border-color:rgba(68,216,200,0.35);color:var(--teal)}
+.tech .dot{width:6px;height:6px;border-radius:50%;background:currentColor;opacity:0.7}
+
+/* ── CALLOUT ── */
+.callout{
+  display:flex;gap:14px;
+  background:rgba(124,110,247,0.07);
+  border:1px solid rgba(124,110,247,0.2);
+  border-radius:8px;
+  padding:16px 20px;
+  margin:20px 0;
+}
+.callout-green{background:rgba(61,214,140,0.06);border-color:rgba(61,214,140,0.2)}
+.callout-orange{background:rgba(244,169,78,0.06);border-color:rgba(244,169,78,0.2)}
+.callout-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.callout-body{font-size:14px;color:var(--muted)}
+.callout-body strong{color:var(--text)}
+
+/* ── FLOW ── */
+.flow-row{
+  display:flex;align-items:center;
+  gap:0;margin:24px 0;flex-wrap:wrap;
+}
+.flow-node{
+  background:var(--bg3);
+  border:1px solid var(--border2);
+  border-radius:8px;padding:12px 18px;
+  text-align:center;
+  min-width:110px;
+}
+.flow-node .label{font-size:11px;color:var(--muted);font-family:'IBM Plex Mono',monospace}
+.flow-node .val{font-size:13px;color:#fff;font-weight:500;margin-top:2px}
+.flow-arrow{color:var(--dim);font-size:16px;padding:0 8px;flex-shrink:0}
+
+/* ── TABLE ── */
+.data-table{width:100%;border-collapse:collapse;margin-top:20px;font-size:13px}
+.data-table th{
+  text-align:left;padding:10px 14px;
+  font-size:11px;text-transform:uppercase;letter-spacing:0.08em;
+  color:var(--dim);border-bottom:1px solid var(--border);
+  font-weight:500;
+}
+.data-table td{
+  padding:11px 14px;color:var(--muted);
+  border-bottom:1px solid rgba(255,255,255,0.04);
+  vertical-align:top;
+}
+.data-table td code{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12px;color:var(--teal);
+  background:rgba(68,216,200,0.08);
+  padding:1px 6px;border-radius:4px;
+}
+.data-table tr:hover td{background:rgba(255,255,255,0.02)}
+
+/* ── DIVIDER ── */
+hr{border:none;border-top:1px solid var(--border);margin:40px 0}
+
+/* ── BIG NUMBER ── */
+.kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0}
+.kpi{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:10px;padding:20px;
+}
+.kpi .num{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:#fff}
+.kpi .kpi-label{font-size:12px;color:var(--muted);margin-top:4px}
+
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .wrapper{grid-template-columns:1fr}
+  aside{position:relative;height:auto}
+  .section,.hero{padding:40px 24px}
+  .split,.split-3{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+<!-- ═══════════════ SIDEBAR ═══════════════ -->
+<aside>
+  <div class="sidebar-logo">
+    <div class="logo-text">Blue<span>Command</span></div>
+    <div class="sub">// documentație tehnică</div>
+  </div>
+  <nav>
+    <div class="nav-group">
+      <div class="nav-group-label">Structură</div>
+      <a href="#stack" class="nav-link active"><span class="icon">📦</span>Tehnologii</a>
+      <a href="#arhitectura" class="nav-link"><span class="icon">🏗️</span>Arhitectură</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label">Backend</div>
+      <a href="#postgres" class="nav-link"><span class="icon">🐘</span>PostgreSQL + EF Core</a>
+      <a href="#jwt" class="nav-link"><span class="icon">🔐</span>Autentificare JWT</a>
+      <a href="#bcrypt" class="nav-link"><span class="icon">🔒</span>Hashing parole BCrypt</a>
+      <a href="#validare" class="nav-link"><span class="icon">✅</span>Validare date</a>
+      <a href="#audit" class="nav-link"><span class="icon">📋</span>Audit Log</a>
+      <a href="#upload" class="nav-link"><span class="icon">📁</span>Upload fișiere</a>
+      <a href="#export" class="nav-link"><span class="icon">📊</span>Export PDF & Excel</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label">Frontend</div>
+      <a href="#axios" class="nav-link"><span class="icon">🌐</span>Axios & Interceptori</a>
+      <a href="#auth-ctx" class="nav-link"><span class="icon">🔑</span>Context autentificare</a>
+      <a href="#harta" class="nav-link"><span class="icon">🗺️</span>Hartă Leaflet</a>
+      <a href="#grafice" class="nav-link"><span class="icon">📈</span>Grafice Recharts</a>
+      <a href="#formulare" class="nav-link"><span class="icon">📝</span>Formulare React</a>
+    </div>
+  </nav>
+</aside>
+
+<!-- ═══════════════ MAIN ═══════════════ -->
+<main>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">// cum a fost construit</div>
+  <h1>Implementarea <em>tehnică</em><br>BlueCommand</h1>
+  <p class="hero-desc">O privire în detaliu asupra fiecărei tehnologii folosite — unde anume apare în cod, ce problemă rezolvă și cum se leagă de restul sistemului.</p>
+  <div class="hero-badges">
+    <span class="badge be">.NET 8 · ASP.NET Core</span>
+    <span class="badge db">PostgreSQL · EF Core · Npgsql</span>
+    <span class="badge fe">React 19 · TypeScript · Vite</span>
+    <span class="badge fe">Leaflet · Recharts · Tailwind</span>
+  </div>
+</div>
+
+<!-- ═══════════ TECH OVERVIEW ═══════════ -->
+<div class="section reveal" id="stack">
+  <div class="section-header">
+    <div class="section-tag">// 01 — vizualizare generală</div>
+    <h2>Ce s-a folosit, unde</h2>
+    <p class="section-intro">Aplicația este împărțită clar în două straturi: un <strong>backend</strong> .NET care expune un REST API și un <strong>frontend</strong> React care consumă acel API. Baza de date este PostgreSQL, accesată exclusiv prin backend.</p>
+  </div>
+
+  <div class="split">
+    <div class="card">
+      <div class="card-icon">🖥️</div>
+      <h3>Backend — .NET 8</h3>
+      <p>Rulează pe server. Gestionează logica de business, autentificarea, accesul la baza de date, upload-ul de fișiere și generarea de rapoarte.</p>
+      <div class="tech-row">
+        <span class="tech green"><span class="dot"></span>ASP.NET Core</span>
+        <span class="tech green"><span class="dot"></span>Entity Framework Core</span>
+        <span class="tech green"><span class="dot"></span>Npgsql</span>
+        <span class="tech green"><span class="dot"></span>JWT Bearer</span>
+        <span class="tech green"><span class="dot"></span>BCrypt.Net</span>
+        <span class="tech green"><span class="dot"></span>FluentValidation</span>
+        <span class="tech green"><span class="dot"></span>QuestPDF</span>
+        <span class="tech green"><span class="dot"></span>ClosedXML</span>
+        <span class="tech green"><span class="dot"></span>DotNetEnv</span>
+        <span class="tech green"><span class="dot"></span>Swagger</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🌐</div>
+      <h3>Frontend — React 19 + TypeScript</h3>
+      <p>Rulează în browser. Afișează datele, gestionează sesiunea utilizatorului, render-ează harta și graficele, trimite cereri HTTP către backend.</p>
+      <div class="tech-row">
+        <span class="tech blue"><span class="dot"></span>React 19</span>
+        <span class="tech blue"><span class="dot"></span>TypeScript 6</span>
+        <span class="tech blue"><span class="dot"></span>Vite</span>
+        <span class="tech blue"><span class="dot"></span>React Router v7</span>
+        <span class="tech blue"><span class="dot"></span>Axios</span>
+        <span class="tech blue"><span class="dot"></span>jwt-decode</span>
+        <span class="tech blue"><span class="dot"></span>React-Leaflet</span>
+        <span class="tech blue"><span class="dot"></span>Recharts</span>
+        <span class="tech blue"><span class="dot"></span>Tailwind CSS</span>
+        <span class="tech blue"><span class="dot"></span>React Hook Form</span>
+        <span class="tech blue"><span class="dot"></span>Zod</span>
+        <span class="tech blue"><span class="dot"></span>React Hot Toast</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:20px">
+    <div class="card-icon">🐘</div>
+    <h3>Baza de date — PostgreSQL</h3>
+    <p>Accesată exclusiv de backend prin EF Core + Npgsql. Frontend-ul nu comunică niciodată direct cu baza de date.</p>
+    <div class="tech-row">
+      <span class="tech orange"><span class="dot"></span>PostgreSQL 14+</span>
+      <span class="tech orange"><span class="dot"></span>EF Core Migrations</span>
+      <span class="tech orange"><span class="dot"></span>snake_case naming</span>
+      <span class="tech orange"><span class="dot"></span>Connection String via .env</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ ARHITECTURA ═══════════ -->
+<div class="section reveal" id="arhitectura">
+  <div class="section-header">
+    <div class="section-tag">// 02 — structura proiectului</div>
+    <h2>Clean Architecture pe backend</h2>
+    <p class="section-intro">Backend-ul urmează principiul Clean Architecture, împărțit în 4 proiecte cu dependențe unidirectionale.</p>
+  </div>
+
+  <table class="data-table">
+    <thead><tr><th>Proiect</th><th>Rol</th><th>Conține</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><code>BlueCommand.Domain</code></td>
+        <td style="color:var(--text)">Nucleul aplicației — zero dependențe externe</td>
+        <td>Entități (Dosar, Agent, Sectie…), Enum-uri (DosarStatus), Constante (RoluriDenumiri)</td>
+      </tr>
+      <tr>
+        <td><code>BlueCommand.Application</code></td>
+        <td style="color:var(--text)">Interfețe pentru servicii</td>
+        <td>IAuditService, IJwtTokenService, IPasswordHasher, ICurrentUserService</td>
+      </tr>
+      <tr>
+        <td><code>BlueCommand.Infrastructure</code></td>
+        <td style="color:var(--text)">Implementări concrete (DB, servicii)</td>
+        <td>BlueCommandDbContext, AuditService, BcryptPasswordHasher, Migrations, DatabaseInitializer</td>
+      </tr>
+      <tr>
+        <td><code>BlueCommand.API</code></td>
+        <td style="color:var(--text)">Stratul HTTP — entry point al aplicației</td>
+        <td>Controllers, DTOs, Validators, Middleware, JwtTokenService, Program.cs</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout" style="margin-top:24px">
+    <div class="callout-icon">💡</div>
+    <div class="callout-body"><strong>De ce contează?</strong> Domain nu știe nimic despre baza de date sau HTTP. Infrastructure implementează interfețele din Application. API-ul depinde de Application (interfețe), nu de Infrastructure (implementări). Dependențele se injectează prin DI în <code>Program.cs</code>.</div>
+  </div>
+</div>
+
+<!-- ═══════════ POSTGRESQL ═══════════ -->
+<div class="section reveal" id="postgres">
+  <div class="section-header">
+    <div class="section-tag">// 03 — backend · baza de date</div>
+    <h2>Conexiunea la PostgreSQL</h2>
+    <p class="section-intro">EF Core se conectează la PostgreSQL prin <strong>Npgsql</strong> — provider-ul oficial. Connection string-ul este citit din fișierul <code>.env</code> sau <code>appsettings.json</code>.</p>
+  </div>
+
+  <div class="code-block">
+    <div class="code-header">
+      <span class="lang">C# · Program.cs</span>
+      <span class="file">înregistrarea DbContext în DI</span>
+    </div>
+    <div class="code-body"><span class="c">// Preia connection string din .env sau appsettings.json</span>
+<span class="k">var</span> connectionString = builder.Configuration[<span class="s">"DB_CONNECTION_STRING"</span>]
+    ?? builder.Configuration.GetConnectionString(<span class="s">"DefaultConnection"</span>)
+    ?? <span class="s">"Host=localhost;Port=5432;Database=bluecommand;..."</span>;
+
+builder.Services.<span class="m">AddDbContext</span>&lt;<span class="t">BlueCommandDbContext</span>&gt;(options =&gt;
+{
+    options.<span class="m">UseNpgsql</span>(connectionString, o =&gt; o.<span class="m">EnableRetryOnFailure</span>());
+    options.<span class="m">UseSnakeCaseNamingConvention</span>(); <span class="c">// ex: NumarDosar → numar_dosar</span>
+});</div>
+  </div>
+
+  <div class="code-block">
+    <div class="code-header">
+      <span class="lang">INI · appsettings.json</span>
+      <span class="file">connection string implicit</span>
+    </div>
+    <div class="code-body"><span class="p">{</span>
+  <span class="n">"ConnectionStrings"</span>: <span class="p">{</span>
+    <span class="n">"DefaultConnection"</span>: <span class="s">"Host=localhost;Port=5432;Database=bluecommand;Username=postgres;Password=postgres"</span>
+  <span class="p">}</span>
+<span class="p">}</span></div>
+  </div>
+
+  <div class="split" style="margin-top:8px">
+    <div class="card">
+      <h3>UseSnakeCaseNamingConvention</h3>
+      <p>Proprietatea C# <code style="color:var(--teal)">NumarDosar</code> devine automat coloana <code style="color:var(--teal)">numar_dosar</code> în PostgreSQL. Fără mapări manuale de nume.</p>
+    </div>
+    <div class="card">
+      <h3>EnableRetryOnFailure</h3>
+      <p>EF Core reface automat conexiunea dacă PostgreSQL nu răspunde temporar — rezistență la căderi tranzitorii de rețea sau restart server.</p>
+    </div>
+  </div>
+
+  <div class="section-header" style="margin-top:48px;margin-bottom:20px">
+    <h2 style="font-size:24px">DbContext — maparea entităților</h2>
+    <p class="section-intro">Clasa <code>BlueCommandDbContext</code> definește toate tabelele și relațiile prin Fluent API.</p>
+  </div>
+
+  <div class="code-block">
+    <div class="code-header">
+      <span class="lang">C# · BlueCommandDbContext.cs</span>
+      <span class="file">exemplu configurare Dosar</span>
+    </div>
+    <div class="code-body"><span class="c">// Fiecare entitate are un DbSet — reprezintă tabela în BD</span>
+<span class="k">public</span> <span class="t">DbSet</span>&lt;<span class="t">Dosar</span>&gt; Dosare =&gt; <span class="m">Set</span>&lt;<span class="t">Dosar</span>&gt;();
+<span class="k">public</span> <span class="t">DbSet</span>&lt;<span class="t">Utilizator</span>&gt; Utilizatori =&gt; <span class="m">Set</span>&lt;<span class="t">Utilizator</span>&gt;();
+<span class="k">public</span> <span class="t">DbSet</span>&lt;<span class="t">AuditLog</span>&gt; AuditLog =&gt; <span class="m">Set</span>&lt;<span class="t">AuditLog</span>&gt;();
+<span class="c">// ... + Sectii, Rapoarte, DosarAgenti, DocumenteDosar, IstoricDosar...</span>
+
+<span class="k">protected override void</span> <span class="m">OnModelCreating</span>(<span class="t">ModelBuilder</span> modelBuilder)
+{
+    modelBuilder.<span class="m">Entity</span>&lt;<span class="t">Dosar</span>&gt;(b =&gt;
+    {
+        b.<span class="m">ToTable</span>(<span class="s">"dosare"</span>);
+        b.<span class="m">HasKey</span>(x =&gt; x.Id);
+        b.<span class="m">HasIndex</span>(x =&gt; x.NumarDosar).<span class="m">IsUnique</span>(); <span class="c">// nr. dosar unic</span>
+        b.<span class="m">Property</span>(x =&gt; x.Status)
+            .<span class="m">HasConversion</span>&lt;<span class="t">string</span>&gt;()   <span class="c">// enum salvat ca string</span>
+            .<span class="m">HasDefaultValue</span>(<span class="t">DosarStatus</span>.DESCHIS);
+
+        <span class="c">// Relație: Dosar → Sectie (restrict delete)</span>
+        b.<span class="m">HasOne</span>(x =&gt; x.Sectie)
+            .<span class="m">WithMany</span>(x =&gt; x.Dosare)
+            .<span class="m">HasForeignKey</span>(x =&gt; x.SectieId)
+            .<span class="m">OnDelete</span>(<span class="t">DeleteBehavior</span>.Restrict);
+    });
+}</div>
+  </div>
+
+  <div class="callout callout-green">
+    <div class="callout-icon">📌</div>
+    <div class="callout-body"><strong>Migrații automate:</strong> La primul <code>dotnet run</code>, metoda <code>DatabaseInitializer.MigrateAndSeedAsync()</code> aplică automat migrațiile EF Core și populează baza de date cu date inițiale (secții, roluri, utilizatori demo și dosare exemplu).</div>
+  </div>
+
+  <div class="section-header" style="margin-top:40px;margin-bottom:16px">
+    <h2 style="font-size:22px">Tabele create în PostgreSQL</h2>
+  </div>
+  <table class="data-table">
+    <thead><tr><th>Tabelă</th><th>Entitate C#</th><th>Note</th></tr></thead>
+    <tbody>
+      <tr><td><code>dosare</code></td><td style="color:var(--text)">Dosar</td><td>Status salvat ca string (DESCHIS/IN_LUCRU/INCHIS)</td></tr>
+      <tr><td><code>utilizatori</code></td><td style="color:var(--text)">Utilizator</td><td>Username unic, parola_hash BCrypt</td></tr>
+      <tr><td><code>sectii</code></td><td style="color:var(--text)">Sectie</td><td>Include latitudine & longitudine pentru hartă</td></tr>
+      <tr><td><code>roluri</code></td><td style="color:var(--text)">Rol</td><td>3 roluri: Administrator, SefInspectorat, AgentPolitie</td></tr>
+      <tr><td><code>dosar_agenti</code></td><td style="color:var(--text)">DosarAgent</td><td>Tabelă de joncțiune Many-to-Many</td></tr>
+      <tr><td><code>documente_dosar</code></td><td style="color:var(--text)">DocumentDosar</td><td>Metadate fișiere (calea fizică e în wwwroot/uploads)</td></tr>
+      <tr><td><code>rapoarte</code></td><td style="color:var(--text)">Raport</td><td>Istoricul rapoartelor generate</td></tr>
+      <tr><td><code>audit_log</code></td><td style="color:var(--text)">AuditLog</td><td>Acțiuni, IP, userId, timestamp</td></tr>
+      <tr><td><code>istoric_dosare</code></td><td style="color:var(--text)">IstoricDosar</td><td>Câmp modificat, valoare veche, valoare nouă</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ═══════════ JWT ═══════════ -->
+<div class="section reveal" id="jwt">
+  <div class="section-header">
+    <div class="section-tag">// 04 — backend · autentificare</div>
+    <h2>Autentificare JWT</h2>
+    <p class="section-intro">Sistemul folosește JSON Web Tokens cu semnătură HMAC-SHA256. Token-ul este emis la login și trimis cu fiecare cerere HTTP în header-ul <code>Authorization</code>.</p>
+  </div>
+
+  <div class="flow-row">
+    <div class="flow-node"><div class="label">1. Login</div><div class="val">POST /api/auth/login</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node"><div class="label">2. Verificare</div><div class="val">BCrypt.Verify()</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node"><div class="label">3. Emitere</div><div class="val">JwtTokenService</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node"><div class="label">4. Stocare</div><div class="val">localStorage (FE)</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node"><div class="label">5. Cereri</div><div class="val">Bearer {token}</div></div>
+  </div>
+
+  <div class="code-block">
+    <div class="code-header">
+      <span class="lang">C# · JwtTokenService.cs</span>
+      <span class="file">generarea token-ului</span>
+    </div>
+    <div class="code-body"><span class="k">public string</span> <span class="m">CreateTokenForUser</span>(<span class="k">int</span> userId, <span class="k">string</span> username,
+    <span class="k">string</span> rolDenumire, <span class="k">int?</span> sectieId, <span class="t">DateTime</span> expiresUtc)
+{
+    <span class="k">var</span> claims = <span class="k">new</span> <span class="t">List</span>&lt;<span class="t">Claim</span>&gt;
+    {
+        <span class="k">new</span>(<span class="s">"userId"</span>, userId.<span class="m">ToString</span>()),
+        <span class="k">new</span>(<span class="s">"username"</span>, username),
+        <span class="k">new</span>(<span class="t">ClaimTypes</span>.Role, rolDenumire),  <span class="c">// pentru [Authorize(Roles=...)]</span>
+        <span class="k">new</span>(<span class="s">"role"</span>, rolDenumire),            <span class="c">// pentru frontend (jwt-decode)</span>
+    };
+    <span class="k">if</span> (sectieId.<span class="m">HasValue</span>)
+        claims.<span class="m">Add</span>(<span class="k">new</span> <span class="t">Claim</span>(<span class="s">"sectieId"</span>, sectieId.Value.<span class="m">ToString</span>()));
+    <span class="c">// sectieId în token → filtrare automată dosare pe secție</span>
+
+    <span class="k">var</span> key = <span class="k">new</span> <span class="t">SymmetricSecurityKey</span>(<span class="t">Encoding</span>.UTF8.<span class="m">GetBytes</span>(_secret));
+    <span class="k">var</span> creds = <span class="k">new</span> <span class="t">SigningCredentials</span>(key, <span class="t">SecurityAlgorithms</span>.HmacSha256);
+
+    <span class="k">var</span> token = <span class="k">new</span> <span class="t">JwtSecurityToken</span>(
+        issuer: _issuer,         <span class="c">// "BlueCommand"</span>
+        audience: _audience,     <span class="c">// "BlueCommandClient"</span>
+        claims: claims,
+        expires: expiresUtc,     <span class="c">// 8 ore implicit</span>
+        signingCredentials: creds
+    );
+
+    <span class="k">return new</span> <span class="t">JwtSecurityTokenHandler</span>().<span class="m">WriteToken</span>(token);
+}</div>
+  </div>
+
+  <div class="code-block">
+    <div class="code-header">
+      <span class="lang">C# · Program.cs</span>
+      <span class="file">validarea token-urilor la fiecare cerere</span>
+    </div>
+    <div class="code-body">builder.Services.<span class="m">AddAuthentication</span>(<span class="t">JwtBearerDefaults</span>.AuthenticationScheme)
+    .<span class="m">AddJwtBearer</span>(options =&gt;
+    {
+        options.TokenValidationParameters = <span class="k">new</span> <span class="t">TokenValidationParameters</span>
+        {
+            ValidateIssuer = <span class="k">true</span>,              <span class="c">// verifică "BlueCommand"</span>
+            ValidateAudience = <span class="k">true</span>,            <span class="c">// verifică "BlueCommandClient"</span>
+            ValidateLifetime = <span class="k">true</span>,            <span class="c">// verifică expirarea</span>
+            ValidateIssuerSigningKey = <span class="k">true</span>,    <span class="c">// verifică semnătura HMAC</span>
+            IssuerSigningKey = <span class="k">new</span> <span class="t">SymmetricSecurityKey</span>(
+                <span class="t">Encoding</span>.UTF8.<span class="m">GetBytes</span>(jwtSecret)),
+            ClockSkew = <span class="t">TimeSpan</span>.<span class="m">FromMinutes</span>(1)  <span class="c">// toleranță 1 min</span>
+        };
+    });
+
+<span class="c">// Politici de autorizare pe roluri</span>
+builder.Services.<span class="m">AddAuthorization</span>(options =&gt;
+{
+    options.<span class="m">AddPolicy</span>(<span class="s">"AdministratorOnly"</span>, p =&gt; p.<span class="m">RequireRole</span>(<span class="s">"Administrator"</span>));
+    options.<span class="m">AddPolicy</span>(<span class="s">"SefSauAdmin"</span>, p =&gt; p.<span class="m">RequireRole</span>(<span class="s">"Administrator"</span>,<span class="s">"SefInspectorat"</span>));
+    options.<span class="m">AddPolicy</span>(<span class="s">"TotiUtilizatorii"</span>, p =&gt; p.<span class="m">RequireAuthenticatedUser</span>());
+});</div>
+  </div>
+
+  <div class="callout callout-orange">
+    <div class="callout-icon">⚠️</div>
+    <div class="callout-body"><strong>Secretul JWT</strong> este citit din variabila de mediu <code>JWT_SECRET</code> (fișierul <code>.env</code>). În producție trebuie să fie un șir aleatoriu de minim 32 de caractere. Cel din <code>appsettings.json</code> este doar fallback pentru dezvoltare locală.</div>
+  </div>
+</div>
+
+<!-- ═══════════ BCRYPT ═══════════ -->
+<div class="section reveal" id="bcrypt">
+  <div class="section-header">
+    <div class="section-tag">// 05 — backend · securitate</div>
+    <h2>Hashing parole cu BCrypt</h2>
+    <p class="section-intro">Parolele <strong>nu sunt stocate niciodată în clar</strong>. Se stochează exclusiv hash-ul BCrypt, care include salt aleatoriu generat automat.</p>
+  </div>
+
+  <div class="code-block">
+    <div class="code-header">
+      <span class="lang">C# · BcryptPasswordHasher.cs</span>
+      <span class="file">BlueCommand.Application/Security/</span>
+    </div>
+    <div class="code-body"><span class="k">public class</span> <span class="t">BcryptPasswordHasher</span> : <span class="t">IPasswordHasher</span>
+{
+    <span class="c">// La înregistrare / setare parolă</span>
+    <span class="k">public string</span> <span class="m">Hash</span>(<span class="k">string</span> password)
+        =&gt; <span class="t">BCrypt</span>.Net.BCrypt.<span class="m">HashPassword</span>(password);
+    <span class="c">// Produce ceva de genul: $2a$11$K5kV2...NXYabc... (60 caractere)</span>
+
+    <span class="c">// La login — compară parola introdusă cu hash-ul din BD</span>
+    <span class="k">public bool</span> <span class="m">Verify</span>(<span class="k">string</span> password, <span class="k">string</span> passwordHash)
+        =&gt; <span class="t">BCrypt</span>.Net.BCrypt.<span class="m">Verify</span>(password, passwordHash);
+}</div>
+  </div>
+
+  <div class="split">
+    <div class="card">
+      <h3>Ce este BCrypt?</h3>
+      <p>Un algoritm de hashing adaptat pentru parole. Include un <strong>salt aleatoriu</strong> (prevenind rainbow table attacks) și un <strong>work factor</strong> (cost=11 implicit) care face brute-force extrem de lent.</p>
+    </div>
+    <div class="card">
+      <h3>Cum funcționează Verify()?</h3>
+      <p>Extrage salt-ul din hash-ul stocat, aplică același algoritm pe parola introdusă și compară rezultatele în mod constant (fără timing attacks). Nu e nevoie să salvezi salt-ul separat.</p>
+    </div>
+  </div>
+
+  <div class="code-block" style="margin-top:20px">
+    <div class="code-header">
+      <span class="lang">C# · AuthController.cs</span>
+      <span class="file">procesul de login</span>
+    </div>
+    <div class="code-body"><span class="c">// 1. Caută utilizatorul după username în BD</span>
+<span class="k">var</span> utilizator = <span class="k">await</span> _db.Utilizatori
+    .<span class="m">Include</span>(u =&gt; u.Rol)
+    .<span class="m">FirstOrDefaultAsync</span>(u =&gt; u.Username == request.Username);
+
+<span class="k">if</span> (utilizator <span class="k">is null</span> || !utilizator.EsteActiv)
+    <span class="k">return</span> <span class="m">Unauthorized</span>(<span class="k">new</span> { error = <span class="s">"Credentiale invalide"</span> });
+
+<span class="c">// 2. Verifică parola față de hash-ul din BD</span>
+<span class="k">if</span> (!_passwordHasher.<span class="m">Verify</span>(request.Parola, utilizator.ParolaHash))
+    <span class="k">return</span> <span class="m">Unauthorized</span>(<span class="k">new</span> { error = <span class="s">"Credentiale invalide"</span> });
+
+<span class="c">// 3. Generează token JWT cu claims (userId, rol, sectieId)</span>
+<span class="k">var</span> expiresUtc = <span class="t">DateTime</span>.UtcNow.<span class="m">AddHours</span>(_jwtSettings.ExpiryHours);
+<span class="k">var</span> token = _jwt.<span class="m">CreateTokenForUser</span>(
+    utilizator.Id, utilizator.Username,
+    utilizator.Rol.Denumire, utilizator.SectieId, expiresUtc);</div>
+  </div>
+</div>
+
+<!-- ═══════════ VALIDARE ═══════════ -->
+<div class="section reveal" id="validare">
+  <div class="section-header">
+    <div class="section-tag">// 06 — backend · validare date</div>
+    <h2>Validare cu FluentValidation</h2>
+    <p class="section-intro">Toate request-urile HTTP sunt validate automat înainte de a ajunge în controller, prin <strong>FluentValidation</strong> integrat în pipeline-ul ASP.NET Core.</p>
+  </div>
+
+  <div class="code-block">
+    <div class="code-header">
+      <span class="lang">C# · DosareValidators.cs</span>
+      <span class="file">exemplu validator</span>
+    </div>
+    <div class="code-body"><span class="k">public class</span> <span class="t">CreateDosarValidator</span> : <span class="t">AbstractValidator</span>&lt;<span class="t">CreateDosarRequestDto</span>&gt;
+{
+    <span class="k">public</span> <span class="m">CreateDosarValidator</span>()
+    {
+        <span class="m">RuleFor</span>(x =&gt; x.NumarDosar)
+            .<span class="m">NotEmpty</span>().<span class="m">WithMessage</span>(<span class="s">"Numarul dosarului este obligatoriu"</span>)
+            .<span class="m">MaximumLength</span>(50);
+
+        <span class="m">RuleFor</span>(x =&gt; x.SectieId)
+            .<span class="m">GreaterThan</span>(0).<span class="m">WithMessage</span>(<span class="s">"Sectia este obligatorie"</span>);
+
+        <span class="m">RuleFor</span>(x =&gt; x.DataIncident)
+            .<span class="m">LessThanOrEqualTo</span>(<span class="t">DateOnly</span>.<span class="m">FromDateTime</span>(<span class="t">DateTime</span>.Today))
+            .<span class="m">When</span>(x =&gt; x.DataIncident.<span class="m">HasValue</span>);
+    }
+}</div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-icon">⚙️</div>
+    <div class="callout-body"><strong>AddFluentValidationAutoValidation()</strong> în <code>Program.cs</code> face ca ASP.NET Core să ruleze automat validatorul înainte de a apela action-ul din controller. Dacă validarea eșuează, se returnează automat <code>400 Bad Request</code> cu erorile structurat pe câmpuri.</div>
+  </div>
+</div>
+
+<!-- ═══════════ AUDIT ═══════════ -->
+<div class="section reveal" id="audit">
+  <div class="section-header">
+    <div class="section-tag">// 07 — backend · trasabilitate</div>
+    <h2>Audit Log</h2>
+    <p class="section-intro">Orice acțiune importantă (login, creare/modificare dosar, upload document etc.) este înregistrată în tabela <code>audit_log</code> cu utilizatorul, acțiunea, detalii și adresa IP.</p>
+  </div>
+
+  <div class="code-block">
+    <div class="code-header">
+      <span class="lang">C# · AuditService.cs</span>
+      <span class="file">BlueCommand.Infrastructure/Services/</span>
+    </div>
+    <div class="code-body"><span class="k">public async</span> <span class="t">Task</span> <span class="m">LogActionAsync</span>(<span class="k">int?</span> userId, <span class="k">string</span> actiune,
+    <span class="k">string?</span> detalii, <span class="k">string?</span> ipAdresa, <span class="t">CancellationToken</span> ct)
+{
+    _db.AuditLog.<span class="m">Add</span>(<span class="k">new</span> <span class="t">AuditLog</span>
+    {
+        UtilizatorId = userId,
+        Actiune = actiune,           <span class="c">// ex: "UPLOAD_DOCUMENT"</span>
+        Detalii = detalii,           <span class="c">// ex: "Uploaded contract.pdf for dosar 2025/001"</span>
+        IpAdresa = ipAdresa,
+        CreatLa = <span class="t">DateTime</span>.UtcNow
+    });
+    <span class="k">await</span> _db.<span class="m">SaveChangesAsync</span>(ct);
+}
+
+<span class="c">// Exemplu apel din DosareController:</span>
+<span class="k">await</span> _audit.<span class="m">LogActionAsync</span>(
+    _currentUser.UserId,
+    <span class="s">"UPLOAD_DOCUMENT"</span>,
+    <span class="s">$"Uploaded {file.FileName} for dosar {dosar.NumarDosar}"</span>,
+    HttpContext.Connection.RemoteIpAddress?.<span class="m">ToString</span>(),
+    cancellationToken);</div>
+  </div>
+</div>
+
+<!-- ═══════════ UPLOAD ═══════════ -->
+<div class="section reveal" id="upload">
+  <div class="section-header">
+    <div class="section-tag">// 08 — backend · fișiere</div>
+    <h2>Upload & servire fișiere</h2>
+    <p class="section-intro">Documentele atașate dosarelor sunt salvate fizic pe server în <code>wwwroot/uploads/{dosarId}/</code>. Metadatele (nume, cale, mărime) sunt salvate în BD. Descărcarea este protejată prin middleware.</p>
+  </div>
+
+  <div class="code-block">
+    <div class="code-header">
+      <span class="lang">C# · DosareController.cs</span>
+      <span class="file">procesul de upload</span>
+    </div>
+    <div class="code-body"><span class="c">// Extensii permise: .pdf .doc .docx .jpg .jpeg .png</span>
+<span class="k">private static readonly</span> <span class="t">HashSet</span>&lt;<span class="k">string</span>&gt; AllowedExtensions = <span class="k">new</span>(...)
+{ <span class="s">".pdf"</span>, <span class="s">".doc"</span>, <span class="s">".docx"</span>, <span class="s">".jpg"</span>, <span class="s">".jpeg"</span>, <span class="s">".png"</span> };
+
+<span class="c">// Validare mărime (max 10 MB)</span>
+<span class="k">if</span> (file.Length &gt; 10 * 1024 * 1024)
+    <span class="k">return</span> <span class="m">BadRequest</span>(<span class="k">new</span> { error = <span class="s">"Fisierul depaseste 10 MB"</span> });
+
+<span class="c">// Construiește calea fizică</span>
+<span class="k">var</span> uploadsRoot = <span class="t">Path</span>.<span class="m">Combine</span>(
+    <span class="t">Directory</span>.<span class="m">GetCurrentDirectory</span>(), <span class="s">"wwwroot"</span>, <span class="s">"uploads"</span>, id.<span class="m">ToString</span>());
+<span class="t">Directory</span>.<span class="m">CreateDirectory</span>(uploadsRoot);  <span class="c">// creează folderul dacă nu există</span>
+
+<span class="c">// Generează un nume unic (GUID) pentru a evita coliziunile</span>
+<span class="k">var</span> storedName = <span class="s">$"{Guid.NewGuid():N}{ext}"</span>;  <span class="c">// ex: a3f7...9b.pdf</span>
+<span class="k">var</span> storedPath = <span class="t">Path</span>.<span class="m">Combine</span>(uploadsRoot, storedName);
+
+<span class="c">// Salvează fizic fișierul</span>
+<span class="k">await using</span> (<span class="k">var</span> stream = <span class="t">File</span>.<span class="m">Create</span>(storedPath))
+    <span class="k">await</span> file.<span class="m">CopyToAsync</span>(stream, cancellationToken);
+
+<span class="c">// Salvează metadatele în BD</span>
+<span class="k">var</span> doc = <span class="k">new</span> <span class="t">DocumentDosar</span>
+{
+    DosarId = id,
+    NumeFisier = file.FileName,        <span class="c">// numele original</span>
+    CaleFisier = <span class="s">$"/uploads/{id}/{storedName}"</span>,  <span class="c">// calea relativă</span>
+    MarimeBytes = file.Length,
+    IncarcatDe = _currentUser.UserId ?? 0,
+    DataIncarcare = <span class="t">DateTime</span>.UtcNow
+};</div>
+  </div>
+
+  <div class="callout callout-orange">
+    <div class="callout-icon">🔒</div>
+    <div class="callout-body"><strong>UploadsAuthorizationMiddleware</strong> interceptează toate cererile spre <code>/uploads/*</code> și verifică că utilizatorul are un JWT valid înainte de a servi fișierul. Fișierele nu sunt public accesibile.</div>
+  </div>
+</div>
+
+<!-- ═══════════ EXPORT ═══════════ -->
+<div class="section reveal" id="export">
+  <div class="section-header">
+    <div class="section-tag">// 09 — backend · rapoarte</div>
+    <h2>Export PDF și Excel</h2>
+    <p class="section-intro">Rapoartele pot fi exportate în două formate. <strong>QuestPDF</strong> generează PDF-uri, iar <strong>ClosedXML</strong> generează fișiere Excel (.xlsx). Ambele sunt returnate ca stream binar în răspunsul HTTP.</p>
+  </div>
+
+  <div class="split">
+    <div>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="lang">C# · RapoarteController.cs</span>
+          <span class="file">generare PDF cu QuestPDF</span>
+        </div>
+        <div class="code-body"><span class="c">// QuestPDF — licență Community (gratuită)</span>
+<span class="t">QuestPDF</span>.Settings.License = <span class="t">LicenseType</span>.Community;
+
+<span class="k">private static</span> <span class="k">byte</span>[] <span class="m">GenerateReportPdf</span>(request, data)
+{
+    <span class="k">var</span> doc = <span class="t">Document</span>.<span class="m">Create</span>(container =&gt;
+    {
+        container.<span class="m">Page</span>(page =&gt;
+        {
+            page.<span class="m">Margin</span>(30);
+            page.<span class="m">DefaultTextStyle</span>(x =&gt; x.<span class="m">FontSize</span>(12));
+            page.<span class="m">Header</span>()
+                .<span class="m">Text</span>(<span class="s">$"Raport: {request.Tip} ({request.DataStart})"</span>)
+                .<span class="m">FontSize</span>(16).<span class="m">SemiBold</span>();
+            page.<span class="m">Content</span>().<span class="m">Column</span>(col =&gt;
+            {
+                col.<span class="m">Item</span>().<span class="m">Text</span>(
+                    <span class="t">JsonSerializer</span>.<span class="m">Serialize</span>(data));
+            });
+        });
+    });
+    <span class="k">return</span> doc.<span class="m">GeneratePdf</span>();  <span class="c">// returnează byte[]</span>
+}
+
+<span class="c">// Răspuns HTTP</span>
+<span class="k">return</span> <span class="m">File</span>(pdf, <span class="s">"application/pdf"</span>,
+    <span class="s">$"raport_{request.Tip}_{DateTime.UtcNow:yyyyMMdd}.pdf"</span>);</div>
+      </div>
+    </div>
+    <div>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="lang">C# · RapoarteController.cs</span>
+          <span class="file">generare Excel cu ClosedXML</span>
+        </div>
+        <div class="code-body"><span class="c">// ClosedXML — wrapper fluent pentru OpenXML</span>
+<span class="k">private static</span> <span class="k">byte</span>[] <span class="m">GenerateReportExcel</span>(request, data)
+{
+    <span class="k">using var</span> workbook = <span class="k">new</span> <span class="t">XLWorkbook</span>();
+    <span class="k">var</span> ws = workbook.Worksheets
+        .<span class="m">Add</span>(request.Tip);   <span class="c">// nume foaie = tip raport</span>
+
+    ws.<span class="m">Cell</span>(1, 1).Value = <span class="s">"Data"</span>;
+    ws.<span class="m">Cell</span>(1, 2).Value =
+        <span class="t">JsonSerializer</span>.<span class="m">Serialize</span>(data);
+
+    ws.<span class="m">Columns</span>().<span class="m">AdjustToContents</span>();
+
+    <span class="k">using var</span> ms = <span class="k">new</span> <span class="t">MemoryStream</span>();
+    workbook.<span class="m">SaveAs</span>(ms);
+    <span class="k">return</span> ms.<span class="m">ToArray</span>();  <span class="c">// returnează byte[]</span>
+}
+
+<span class="c">// Răspuns HTTP cu MIME type corect</span>
+<span class="k">return</span> <span class="m">File</span>(xlsx,
+    <span class="s">"application/vnd.openxmlformats-..."</span>,
+    <span class="s">$"raport_{request.Tip}.xlsx"</span>);</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout callout-green">
+    <div class="callout-icon">📊</div>
+    <div class="callout-body"><strong>4 tipuri de rapoarte:</strong> <code>INCIDENTE</code> (grupat lunar), <code>STATISTICI_SECTII</code> (deschise/în lucru/închise per secție), <code>TIP_INCIDENT</code> (distribuție pe categorie) și <code>ACTIVITATE_AGENTI</code> (dosare per agent). Datele sunt calculate în timp real cu LINQ + EF Core direct în PostgreSQL.</div>
+  </div>
+</div>
+
+<!-- ═══════════ AXIOS ═══════════ -->
+<div class="section reveal" id="axios">
+  <div class="section-header">
+    <div class="section-tag">// 10 — frontend · comunicare HTTP</div>
+    <h2>Axios cu interceptori</h2>
+    <p class="section-intro">Toate cererile HTTP din frontend trec printr-o instanță Axios configurată cu <strong>2 interceptori</strong>: unul care adaugă automat token-ul JWT la fiecare cerere, și unul care gestionează expirarea sesiunii.</p>
+  </div>
+
+  <div class="code-block">
+    <div class="code-header">
+      <span class="lang">TypeScript · src/api/axios.ts</span>
+      <span class="file">instanța Axios centrală</span>
+    </div>
+    <div class="code-body"><span class="k">import</span> axios <span class="k">from</span> <span class="s">'axios'</span>
+
+<span class="k">const</span> baseURL =
+  (<span class="v">window</span> <span class="k">as any</span>).__API_URL__ ??
+  <span class="k">import</span>.meta.env.<span class="v">VITE_API_URL</span> ??
+  <span class="s">'http://localhost:5001'</span>
+
+<span class="k">export const</span> api = axios.<span class="m">create</span>({ baseURL })
+
+<span class="c">// ① Interceptor REQUEST — adaugă JWT la fiecare cerere</span>
+api.interceptors.request.<span class="m">use</span>((config) =&gt; {
+  <span class="k">const</span> token = localStorage.<span class="m">getItem</span>(<span class="s">'bluecommand_token'</span>)
+  <span class="k">if</span> (token) config.headers.Authorization = <span class="s">`Bearer ${token}`</span>
+  <span class="k">return</span> config
+})
+
+<span class="c">// ② Interceptor RESPONSE — redirect la login dacă 401</span>
+api.interceptors.response.<span class="m">use</span>(
+  (res) =&gt; res,
+  (err) =&gt; {
+    <span class="k">if</span> (err.response?.status === 401) {
+      localStorage.<span class="m">removeItem</span>(<span class="s">'bluecommand_token'</span>)
+      window.location.href = <span class="s">'/login'</span>   <span class="c">// redirect automat</span>
+    }
+    <span class="k">return</span> Promise.<span class="m">reject</span>(err)
+  },
+)</div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-icon">💡</div>
+    <div class="callout-body"><strong>Avantaj:</strong> Nicio pagină nu trebuie să gestioneze manual token-ul sau erorile 401. Tot codul din <code>src/api/</code> importă această instanță <code>api</code> și beneficiază automat de autentificare și logout automat la expirare.</div>
+  </div>
+</div>
+
+<!-- ═══════════ AUTH CONTEXT ═══════════ -->
+<div class="section reveal" id="auth-ctx">
+  <div class="section-header">
+    <div class="section-tag">// 11 — frontend · sesiune utilizator</div>
+    <h2>AuthContext + jwt-decode</h2>
+    <p class="section-intro">Sesiunea utilizatorului este gestionată global prin React Context. La montare, dacă există un token în <code>localStorage</code>, acesta este decodat cu <strong>jwt-decode</strong> pentru a extrage datele utilizatorului.</p>
+  </div>
+
+  <div class="code-block">
+    <div class="code-header">
+      <span class="lang">TypeScript · src/context/AuthContext.tsx</span>
+      <span class="file">decodarea token-ului JWT pe frontend</span>
+    </div>
+    <div class="code-body"><span class="k">import</span> { jwtDecode } <span class="k">from</span> <span class="s">'jwt-decode'</span>
+
+<span class="c">// La fiecare reload de pagină — reconstituie sesiunea din token</span>
+<span class="m">useEffect</span>(() =&gt; {
+  <span class="k">if</span> (!token) { setUser(<span class="k">null</span>); <span class="k">return</span> }
+  <span class="k">try</span> {
+    <span class="k">const</span> decoded = <span class="m">jwtDecode</span>&lt;<span class="t">JwtPayload</span>&gt;(token)
+
+    <span class="c">// Verifică dacă token-ul nu a expirat</span>
+    <span class="k">if</span> (decoded.exp * 1000 &lt; Date.<span class="m">now</span>()) {
+      localStorage.<span class="m">removeItem</span>(<span class="s">'bluecommand_token'</span>)
+      setToken(<span class="k">null</span>); setUser(<span class="k">null</span>); <span class="k">return</span>
+    }
+
+    <span class="c">// Extrage: userId, username, rol, sectieId</span>
+    <span class="k">const</span> role = decoded.role ?? decoded[<span class="s">'http://schemas...claims/role'</span>] ?? <span class="s">''</span>
+    <span class="m">setUser</span>({
+      id: <span class="t">Number</span>(decoded.userId),
+      username: decoded.username,
+      rol: <span class="m">mapRole</span>(role),
+      sectieId: decoded.sectieId ? <span class="t">Number</span>(decoded.sectieId) : <span class="k">null</span>,
+    })
+  } <span class="k">catch</span> { <span class="c">/* token invalid → logout */</span> }
+}, [token])</div>
+  </div>
+
+  <div class="code-block">
+    <div class="code-header">
+      <span class="lang">TypeScript · src/App.tsx</span>
+      <span class="file">protejarea rutelor pe rol</span>
+    </div>
+    <div class="code-body"><span class="c">// ProtectedRoute verifică rolul din AuthContext</span>
+{
+  path: <span class="s">'/sectii'</span>,
+  element: (
+    &lt;<span class="t">ProtectedRoute</span> roles={[<span class="s">'Administrator'</span>, <span class="s">'SefInspectorat'</span>]}&gt;
+      &lt;<span class="t">SectiiPage</span> /&gt;
+    &lt;/<span class="t">ProtectedRoute</span>&gt;
+  ),
+},
+{
+  path: <span class="s">'/utilizatori'</span>,
+  element: (
+    &lt;<span class="t">ProtectedRoute</span> roles={[<span class="s">'Administrator'</span>]}&gt;  <span class="c">// doar admin</span>
+      &lt;<span class="t">UtilizatoriPage</span> /&gt;
+    &lt;/<span class="t">ProtectedRoute</span>&gt;
+  ),
+},</div>
+  </div>
+</div>
+
+<!-- ═══════════ HARTA ═══════════ -->
+<div class="section reveal" id="harta">
+  <div class="section-header">
+    <div class="section-tag">// 12 — frontend · hartă interactivă</div>
+    <h2>Hartă cu React-Leaflet</h2>
+    <p class="section-intro">Pagina de detalii a unei secții afișează locația pe hartă. Se folosesc <strong>React-Leaflet</strong> (wrapper React pentru Leaflet.js) și tile-uri OpenStreetMap — fără API key, complet gratuit.</p>
+  </div>
+
+  <div class="callout callout-green" style="margin-bottom:20px">
+    <div class="callout-icon">🗄️</div>
+    <div class="callout-body"><strong>Coordonatele</strong> sunt stocate direct în tabela <code>sectii</code> din PostgreSQL, ca câmpurile <code>latitudine</code> (double) și <code>longitudine</code> (double). Seed-ul inițializează: Sectia 1 → 44.3279, 23.7935 | Sectia 2 → 44.3387, 23.7828 | Sectia 3 → 44.3071, 23.8215.</div>
+  </div>
+
+  <div class="code-block">
+    <div class="code-header">
+      <span class="lang">TypeScript · SectieDetailPage.tsx</span>
+      <span class="file">integrarea hărții</span>
+    </div>
+    <div class="code-body"><span class="k">import</span> <span class="s">'leaflet/dist/leaflet.css'</span>     <span class="c">// stiluri necesare Leaflet</span>
+<span class="k">import</span> { <span class="t">MapContainer</span>, <span class="t">Marker</span>, <span class="t">Popup</span>, <span class="t">TileLayer</span> } <span class="k">from</span> <span class="s">'react-leaflet'</span>
+<span class="k">import</span> L <span class="k">from</span> <span class="s">'leaflet'</span>
+
+<span class="c">// Fix cunoscut pentru icoanele Leaflet cu Vite/Webpack</span>
+<span class="k">delete</span> (L.Icon.Default.prototype <span class="k">as any</span>)._getIconUrl
+L.Icon.Default.<span class="m">mergeOptions</span>({
+  iconRetinaUrl: markerIcon2x,
+  iconUrl: markerIcon,
+  shadowUrl: markerShadow
+})
+
+<span class="c">// Componenta hartă — centru pe coordonatele secției</span>
+&lt;<span class="t">MapContainer</span>
+  center={[sectie.latitudine, sectie.longitudine]}
+  zoom={13}
+  style={{ height: <span class="s">'300px'</span>, width: <span class="s">'100%'</span> }}
+&gt;
+  <span class="c">{/* Tile-uri OpenStreetMap — gratuite, fără API key */}</span>
+  &lt;<span class="t">TileLayer</span> url=<span class="s">"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"</span> /&gt;
+
+  <span class="c">{/* Marker cu Popup la coordonatele secției */}</span>
+  &lt;<span class="t">Marker</span> position={[sectie.latitudine, sectie.longitudine]}&gt;
+    &lt;<span class="t">Popup</span>&gt;
+      &lt;div&gt;{sectie.nume}&lt;/div&gt;
+      &lt;div&gt;{sectie.adresa}&lt;/div&gt;
+    &lt;/<span class="t">Popup</span>&gt;
+  &lt;/<span class="t">Marker</span>&gt;
+&lt;/<span class="t">MapContainer</span>&gt;</div>
+  </div>
+
+  <div class="split">
+    <div class="card">
+      <h3>react-leaflet</h3>
+      <p>Wrapper React oficial pentru Leaflet.js. Componentele <code>MapContainer</code>, <code>TileLayer</code>, <code>Marker</code> și <code>Popup</code> sunt componente React normale, cu lifecycle gestionat automat.</p>
+    </div>
+    <div class="card">
+      <h3>OpenStreetMap</h3>
+      <p>Tile-urile de hartă vin de la OpenStreetMap, un proiect open-source. Nu necesită cont sau API key, spre deosebire de Google Maps sau Mapbox.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ GRAFICE ═══════════ -->
+<div class="section reveal" id="grafice">
+  <div class="section-header">
+    <div class="section-tag">// 13 — frontend · vizualizare date</div>
+    <h2>Grafice cu Recharts</h2>
+    <p class="section-intro">Dashboard-ul afișează statisticile în două tipuri de grafice: <strong>PieChart</strong> pentru distribuția dosarelor pe status și <strong>BarChart</strong> pentru activitatea pe secții.</p>
+  </div>
+
+  <div class="code-block">
+    <div class="code-header">
+      <span class="lang">TypeScript · DashboardPage.tsx</span>
+      <span class="file">grafice Recharts</span>
+    </div>
+    <div class="code-body"><span class="k">import</span> { <span class="t">Bar</span>, <span class="t">BarChart</span>, <span class="t">Cell</span>, <span class="t">Legend</span>, <span class="t">Pie</span>, <span class="t">PieChart</span>,
+         <span class="t">ResponsiveContainer</span>, <span class="t">Tooltip</span>, <span class="t">XAxis</span>, <span class="t">YAxis</span> } <span class="k">from</span> <span class="s">'recharts'</span>
+
+<span class="c">// Culorile pentru fiecare status</span>
+<span class="k">const</span> <span class="v">STATUS_COLORS</span>: Record&lt;string, string&gt; = {
+  DESCHIS: <span class="s">'#22c55e'</span>,    <span class="c">// verde</span>
+  IN_LUCRU: <span class="s">'#f59e0b'</span>,   <span class="c">// galben</span>
+  INCHIS: <span class="s">'#64748b'</span>,     <span class="c">// gri</span>
+}
+
+<span class="c">// PieChart — distribuție status dosare</span>
+&lt;<span class="t">ResponsiveContainer</span> width=<span class="s">"100%"</span> height={260}&gt;
+  &lt;<span class="t">PieChart</span>&gt;
+    &lt;<span class="t">Pie</span> data={statusData} dataKey=<span class="s">"value"</span> nameKey=<span class="s">"name"</span>
+      cx=<span class="s">"50%"</span> cy=<span class="s">"50%"</span> outerRadius={90}&gt;
+      {statusData.<span class="m">map</span>((entry) =&gt; (
+        &lt;<span class="t">Cell</span> key={entry.name} fill={STATUS_COLORS[entry.name]} /&gt;
+      ))}
+    &lt;/<span class="t">Pie</span>&gt;
+    &lt;<span class="t">Tooltip</span> /&gt; &lt;<span class="t">Legend</span> /&gt;
+  &lt;/<span class="t">PieChart</span>&gt;
+&lt;/<span class="t">ResponsiveContainer</span>&gt;
+
+<span class="c">// BarChart — dosare pe secții (date din API rapoarte)</span>
+&lt;<span class="t">BarChart</span> data={sectiiChartData}&gt;
+  &lt;<span class="t">XAxis</span> dataKey=<span class="s">"name"</span> /&gt; &lt;<span class="t">YAxis</span> /&gt; &lt;<span class="t">Tooltip</span> /&gt; &lt;<span class="t">Legend</span> /&gt;
+  &lt;<span class="t">Bar</span> dataKey=<span class="s">"Deschise"</span> fill=<span class="s">"#22c55e"</span> /&gt;
+  &lt;<span class="t">Bar</span> dataKey=<span class="s">"În Lucru"</span> fill=<span class="s">"#f59e0b"</span> /&gt;
+  &lt;<span class="t">Bar</span> dataKey=<span class="s">"Inchise"</span> fill=<span class="s">"#64748b"</span> /&gt;
+&lt;/<span class="t">BarChart</span>&gt;</div>
+  </div>
+</div>
+
+<!-- ═══════════ FORMULARE ═══════════ -->
+<div class="section reveal" id="formulare">
+  <div class="section-header">
+    <div class="section-tag">// 14 — frontend · formulare</div>
+    <h2>Formulare cu React Hook Form + Zod</h2>
+    <p class="section-intro">Formularele sunt gestionate cu <strong>React Hook Form</strong> (performanță, fără re-render la fiecare tastă) și validate cu <strong>Zod</strong> (scheme TypeScript-first). Legătura dintre ele se face prin <code>@hookform/resolvers</code>.</p>
+  </div>
+
+  <div class="code-block">
+    <div class="code-header">
+      <span class="lang">TypeScript · DosarFormPage.tsx</span>
+      <span class="file">exemplu formular cu validare Zod</span>
+    </div>
+    <div class="code-body"><span class="k">import</span> { useForm } <span class="k">from</span> <span class="s">'react-hook-form'</span>
+<span class="k">import</span> { zodResolver } <span class="k">from</span> <span class="s">'@hookform/resolvers/zod'</span>
+<span class="k">import</span> { z } <span class="k">from</span> <span class="s">'zod'</span>
+
+<span class="c">// Schema Zod — tipuri + validare într-o singură definiție</span>
+<span class="k">const</span> schema = z.<span class="m">object</span>({
+  numarDosar: z.<span class="m">string</span>().<span class="m">min</span>(1, <span class="s">'Câmp obligatoriu'</span>).<span class="m">max</span>(50),
+  sectieId: z.<span class="m">number</span>({ required_error: <span class="s">'Alege o secție'</span> }).<span class="m">positive</span>(),
+  dataIncident: z.<span class="m">string</span>().<span class="m">optional</span>(),
+  tipIncident: z.<span class="m">string</span>().<span class="m">optional</span>(),
+})
+
+<span class="k">type</span> <span class="t">FormData</span> = z.<span class="m">infer</span>&lt;<span class="k">typeof</span> schema&gt;  <span class="c">// TypeScript type din schema</span>
+
+<span class="k">const</span> { register, handleSubmit, formState: { errors } } =
+  <span class="m">useForm</span>&lt;<span class="t">FormData</span>&gt;({ resolver: <span class="m">zodResolver</span>(schema) })
+
+<span class="c">// Câmp cu eroare inline</span>
+&lt;input {...<span class="m">register</span>(<span class="s">'numarDosar'</span>)} /&gt;
+{errors.numarDosar &amp;&amp; &lt;span&gt;{errors.numarDosar.message}&lt;/span&gt;}</div>
+  </div>
+
+  <div class="split">
+    <div class="card">
+      <h3>React Hook Form</h3>
+      <p>Nu stochează valorile în state React — operează direct cu DOM-ul prin <code>ref</code>-uri. Rezultat: <strong>zero re-render-uri</strong> la fiecare tastă, performanță maximă chiar și pentru formulare complexe.</p>
+    </div>
+    <div class="card">
+      <h3>Zod</h3>
+      <p>Schema definește simultan <strong>tipul TypeScript</strong> și <strong>regulile de validare</strong>. Prin <code>z.infer&lt;typeof schema&gt;</code>, tipurile sunt deduse automat — fără duplicare de cod.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section-header" style="margin-top:0;margin-bottom:16px">
+    <h2 style="font-size:22px">React Hot Toast — notificări</h2>
+  </div>
+  <div class="code-block">
+    <div class="code-header">
+      <span class="lang">TypeScript · orice pagină</span>
+      <span class="file">feedback utilizator</span>
+    </div>
+    <div class="code-body"><span class="k">import</span> toast <span class="k">from</span> <span class="s">'react-hot-toast'</span>
+
+toast.<span class="m">success</span>(<span class="s">'Dosar creat cu succes'</span>)   <span class="c">// ✓ verde</span>
+toast.<span class="m">error</span>(<span class="s">'Eroare la salvare'</span>)          <span class="c">// ✗ roșu</span>
+toast(<span class="s">'Delogat'</span>)                         <span class="c">// neutru</span>
+
+<span class="c">// Configurat în App.tsx, disponibil global</span>
+&lt;<span class="t">Toaster</span> position=<span class="s">"top-right"</span> /&gt;</div>
+  </div>
+</div>
+
+</main>
+</div>
+
+<script>
+// Reveal on scroll
+const reveals = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 60);
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+reveals.forEach(r => obs.observe(r));
+
+// Active nav link on scroll
+const sections = document.querySelectorAll('[id]');
+const links = document.querySelectorAll('.nav-link');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) cur = s.id; });
+  links.forEach(l => {
+    const href = l.getAttribute('href')?.replace('#','');
+    l.classList.toggle('active', href === cur);
+  });
+}, { passive: true });
+</script>
+</body>
+</html>

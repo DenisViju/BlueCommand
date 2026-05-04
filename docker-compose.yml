@@ -1,0 +1,44 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: bluecommand
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/BlueCommand.API/Dockerfile
+    depends_on:
+      - db
+    environment:
+      ASPNETCORE_URLS: http://+:8080
+      DB_CONNECTION_STRING: Host=db;Port=5432;Database=bluecommand;Username=postgres;Password=postgres
+      Jwt__Secret: ${JWT_SECRET:-change-me-change-me-change-me-change-me}
+      JWT_SECRET: ${JWT_SECRET:-change-me-change-me-change-me-change-me}
+      Jwt__Issuer: BlueCommand
+      Jwt__Audience: BlueCommandClient
+      Jwt__ExpiryHours: "8"
+    ports:
+      - "5001:8080"
+    volumes:
+      - ./backend/BlueCommand.API/wwwroot/uploads:/app/wwwroot/uploads
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    depends_on:
+      - backend
+    environment:
+      VITE_API_URL: http://localhost:5173
+    ports:
+      - "5173:80"
+
+volumes:
+  pgdata:

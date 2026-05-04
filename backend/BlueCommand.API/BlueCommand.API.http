@@ -1,0 +1,10 @@
+@BlueCommandApiHost = http://localhost:5001
+
+### Login (admin)
+POST {{BlueCommandApiHost}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "parola": "Admin@1234"
+}
